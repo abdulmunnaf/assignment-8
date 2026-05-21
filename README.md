@@ -4,7 +4,7 @@ This repository is a Next.js (App Router) project that uses Better Auth for
 authentication and MongoDB (Atlas) as the database. It can be extended with
 AI integrations (OpenAI, Hugging Face, or local models) — instructions below.
 
-**Live preview:** https://a-8-skil-shaper.vercel.app
+**Live preview:** https://assignment-8-three-sage.vercel.app/
 
 **Quick summary:** auth (email/password + Google OAuth), protected routes,
 profile editing, responsive UI with Tailwind + DaisyUI.
