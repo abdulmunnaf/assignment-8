@@ -1,72 +1,84 @@
-##🎓 SkillSphere - Online Learning PlatForm
+## AuraTiles — Next.js app (with Better Auth + MongoDB)
 
-A mordern online learning platform where users can explore courses, watch lessons, 
-and enroll in skill-besed programs like Web Development, Design, Marketiong, and more.
+This repository is a Next.js (App Router) project that uses Better Auth for
+authentication and MongoDB (Atlas) as the database. It can be extended with
+AI integrations (OpenAI, Hugging Face, or local models) — instructions below.
 
-## 🌐 Live URL
-📎  [https://a-8-skil-shaper.vercel.app]
+**Live preview:** https://a-8-skil-shaper.vercel.app
 
----
+**Quick summary:** auth (email/password + Google OAuth), protected routes,
+profile editing, responsive UI with Tailwind + DaisyUI.
 
-## ✨ Key Features
+**Prerequisites**
+- Node.js 18 or 20
+- npm (bundled) or compatible package manager
+- MongoDB Atlas cluster (connection string)
 
- - 🔐**Authenticaiton** - Email/Password Login & Google OAuth via Better Auth
- - 📚**All Courses Page** - Browse and serch courses by title
- - 🔒**Proteced Courses Page** - Only accessible when logged in 
- - 👤**My profile page** - View loged-in user info
- - 🏠**Hero Section** - Banner With call-to-action
- - ✏️**Update Profile** - Update name and image
- - 🔥**Populer section** - Top 3 highest-rated courses on hompage
- - 📌**Learning Tips** - Study and tiome manangement tips
- - 🏆**Top instructor section - Featured instructor cards 
- - 🆕**Trending courses** - Latest and thrending courses highlights
- - 🔎**Search funcitonality** - Search courses by title on All courses page
- - 🍞**Toast Notification** - A toast will be displayed when the user logs in
- - 🔃**Loading States** - Skeleton/spinenr on data fetching
- - ❎**404 Not found page** - Custom Not found page
- - 📱**Fully mobile responsive - Mobile, teblet, desktop
- - 📼**Animations** - smooth UI animation vai [Swiper.js / Mothon / Animation.css]
+**Local setup**
+- Install dependencies:
 
----
-
-## 🛠️ Tech Stack
-
-| Technology | Purpose |
-|---|---|
-| [Next.js](https://nextjs.org/) | React framework (App Router) |
-| [Tailwind CSS](https://tailwindcss.com/) | Utility-first styling |
-| [DaisyUI](https://daisyui.com/) | UI component library |
-| [Better Auth](https://better-auth.com/) | Authentication (Email + Google) |
-| [MongoDB](https://www.mongodb.com/) | Database via MongoDB Atlas |
-| [ReactSpring](https://reactSpring.com/) | Hero slider / carousel |
-
----
-
-##📁 Project structure
-
+```bash
+npm install
 ```
-src/
-├── app/
-|   ├── (auth)/
-|   |   ├── login                    #login page
-|   |   └── register                 #register page
-│   ├── (main)/   
-│   │   ├── cours/[id]/              # Course details (protected)
-│   │   ├── courses/                 # All courses page
-│   │   ├── profile/                 # My Profile page
-│   │   ├──  update-profile/         # Update profile form
-│   │   ├── layout.jsx               # main layout
-│   │   └── page.js                  # Home page
-│   ├── api/   
-│   │   └── auth/[...all]/route.js   # Better Auth API handler
-│   └── not-found.jsx                # 404 page
-│   └── layout.js                    # root layout
-├── assets/
-├── components/                      # Shared UI components
-|        ├── hompage 
-|        ├── sheard
-├── lib/   
-│   ├── auth.js                      # Better Auth server config
-│   └── auth-client.js               # Better Auth client config
-│   └── data.js                      # function configer
-└── proxy.js
+- Start dev server:
+
+```bash
+npm run dev
+```
+
+**Important npm scripts**
+- `dev`: runs Next.js in development (`next dev`)
+- `build`: builds for production (`next build`)
+- `start`: runs the production server (`next start`)
+- `lint`: runs ESLint
+
+**Environment variables**
+Create a `.env.local` in the project root (this file is gitignored).
+
+Example `.env.local`:
+
+```env
+MONGO_URI="mongodb+srv://<db_username>:<db_password>@cluster0.sq0nbb4.mongodb.net/?appName=Cluster0"
+GOOGLE_CLIENT_ID="<your-google-client-id>"
+GOOGLE_CLIENT_SECRET="<your-google-client-secret>"
+NEXT_PUBLIC_BETTER_AUTH_URL="/api/auth"
+# Optional for AI features:
+OPENAI_API_KEY="sk-..."
+HUGGINGFACE_API_KEY="hf_..."
+```
+
+**Notes on env vars**
+- `MONGO_URI` is used server-side (do not expose it publicly).
+- `NEXT_PUBLIC_BETTER_AUTH_URL` is intentionally public so the client can
+  call the auth endpoint.
+
+**AI integration (optional)**
+- To call OpenAI or similar from the server, add `OPENAI_API_KEY` and use it
+  in server-side routes (never expose secret keys to the browser).
+- For in-browser AI usage, proxy requests through server routes to keep keys
+  private; or use `NEXT_PUBLIC_` prefixed tokens only for public-only services.
+
+**Database**
+- The project connects to MongoDB via `MONGO_URI`. Example client initialization
+  is in `src/lib/auth.js`.
+
+**Authentication**
+- Server config: `src/lib/auth.js`
+- Client helper: `src/lib/auth-client.js`
+- API handler for Better Auth: `src/app/api/auth/[...all]/route.js`
+
+**Security**
+- Never commit `.env.local` or credentials to git. Rotate secrets if leaked.
+
+**Deploy**
+- Works on Vercel or any Node hosting that supports Next.js. Add env vars in
+  the platform's dashboard (Vercel, Render, etc.).
+
+**Where to edit**
+- Auth server config: [src/lib/auth.js](src/lib/auth.js)
+- Auth client config: [src/lib/auth-client.js](src/lib/auth-client.js)
+- API route: [src/app/api/auth/[...all]/route.js](src/app/api/auth/[...all]/route.js)
+
+If you'd like, I can:
+- add an `AI` section with example server route using OpenAI, or
+- add a setup script that validates env vars before starting.
